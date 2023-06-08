@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Copyright © Samdoit (support@samdoit.com). All rights reserved.
+ * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Backend\Model\Menu\Builder">
+        <plugin
+            name="Samdoit_Community_Plugin_Magento_Backend_Model_Menu_Builder"
+            type="Samdoit\Community\Plugin\Magento\Backend\Model\Menu\BuilderPlugin"
+        />
+    </type>
+</config>
