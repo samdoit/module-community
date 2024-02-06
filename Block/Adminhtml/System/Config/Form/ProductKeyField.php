@@ -19,7 +19,7 @@ class ProductKeyField extends Field
     /**
      * Retrieve HTML markup for given form element
      *
-     * @param \Magento\Framework\Data\Form\Element\AbstractElement $element
+     * @param  \Magento\Framework\Data\Form\Element\AbstractElement $element
      * @return string
      */
     public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)

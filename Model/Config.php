@@ -32,6 +32,7 @@ class Config
 
     /**
      * Config constructor.
+     *
      * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
@@ -43,7 +44,7 @@ class Config
     /**
      * Receive Product Updates
      *
-     * @param null $storeId
+     * @param  null $storeId
      * @return string
      */
     public function receiveProductUpdates($storeId = null)
@@ -57,7 +58,7 @@ class Config
     /**
      * Receive Special Offers
      *
-     * @param null $storeId
+     * @param  null $storeId
      * @return string
      */
     public function receiveSpecialOffers($storeId = null)
@@ -71,7 +72,7 @@ class Config
     /**
      * Receive News
      *
-     * @param null $storeId
+     * @param  null $storeId
      * @return string
      */
     public function receiveNews($storeId = null)
@@ -85,7 +86,7 @@ class Config
     /**
      * Receive Tips & Tricks
      *
-     * @param null $storeId
+     * @param  null $storeId
      * @return string
      */
     public function receiveTipsAndTricks($storeId = null)
@@ -99,7 +100,7 @@ class Config
     /**
      * Receive General Information
      *
-     * @param null $storeId
+     * @param  null $storeId
      * @return string
      */
     public function receiveGeneralInformation($storeId = null)
@@ -113,7 +114,7 @@ class Config
     /**
      * Receive Notifications
      *
-     * @param null $storeId
+     * @param  null $storeId
      * @return array
      */
     public function receiveNotifications($storeId = null)
@@ -130,7 +131,7 @@ class Config
     /**
      * Display Menu
      *
-     * @param null $storeId
+     * @param  null $storeId
      * @return string
      */
     public function menuEnabled($storeId = null)
@@ -144,8 +145,8 @@ class Config
     /**
      * Retrieve store config value
      *
-     * @param string $path
-     * @param null $storeId
+     * @param  string $path
+     * @param  null   $storeId
      * @return mixed
      */
     public function getConfig($path, $storeId = null)

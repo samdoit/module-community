@@ -12,6 +12,7 @@ use Magento\Framework\App\ProductMetadataInterface;
 
 /**
  * Class Section
+ *
  * @package Samdoit\Community\Model
  */
 final class Section
@@ -47,10 +48,11 @@ final class Section
 
     /**
      * Section constructor.
-     * @param ScopeConfigInterface $scopeConfig
+     *
+     * @param ScopeConfigInterface     $scopeConfig
      * @param ProductMetadataInterface $metadata
-     * @param null $name
-     * @param null $key
+     * @param null                     $name
+     * @param null                     $key
      */
     final public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -78,6 +80,7 @@ final class Section
     final public function getModule()
     {
         $module = (string) $this->getConfig(self::MODULE);
+
         $url = $this->scopeConfig->getValue(
             'web/unsecure/base' . '_' . 'url',
             ScopeInterface::SCOPE_STORE,
@@ -85,11 +88,7 @@ final class Section
         );
 
         if (\Samdoit\Community\Model\UrlChecker::showUrl($url)) {
-            if ($module
-                && (!$this->getConfig(self::TYPE)
-                    || $this->getConfig(self::TYPE) && $this->metadata->getEdition() != 'Community'
-                )
-            ) {
+            if ($module && ($this->getConfig(self::TYPE) == 'Paid')) {
                 return $module;
             }
         }
@@ -117,31 +116,35 @@ final class Section
     }
 
     /**
-     * @param $data
-     * @param null $k
+     * @param  $data
+     * @param  null $k
      * @return bool
      */
     final public function validate($data)
     {
-        if (isset($data[$this->getModule()])) {
-            return !empty($data[$this->getModule()]);
+        $result = false;
+        $module = (string) $this->getConfig(self::MODULE);
+
+        if ($module && isset($data[$module])) {
+            return !empty($data[$module]);
         }
 
         $id = $this->getModule();
         $k = $this->getKey();
-
-        $result = $this->validateIDK($id, $k);
-        if (!$result) {
-            $id .= 'Plus';
+        if (!empty($k)) {
             $result = $this->validateIDK($id, $k);
+            if (!$result) {
+                $id .= 'Plus';
+                $result = $this->validateIDK($id, $k);
+            }
         }
 
         return $result;
     }
 
     /**
-     * @param string $id
-     * @param string $k
+     * @param  string $id
+     * @param  string $k
      * @return bool
      */
     private function validateIDK($id, $k)
@@ -149,13 +152,13 @@ final class Section
         $l = substr($id, 1, 1);
         $d = (string) strlen($id);
 
-        return (strlen($k) >= '3' . '2')
+        return ((string) strlen($k) >= '32')
             && (strpos($k, $l, 5) == 5)
             && (strpos($k, $d, 19) == 19);
     }
 
     /**
-     * @param string $field
+     * @param  string $field
      * @return mixed
      */
     private function getConfig($field)

@@ -33,8 +33,9 @@ class ConfigObserver implements ObserverInterface
 
     /**
      * ConfigObserver constructor.
-     * @param SectionFactory $sectionFactory
-     * @param Info $info
+     *
+     * @param SectionFactory   $sectionFactory
+     * @param Info             $info
      * @param ManagerInterface $messageManager
      */
     final public function __construct(
@@ -62,14 +63,12 @@ class ConfigObserver implements ObserverInterface
             ? $groups['general']['fields']['key']['value']
             : null;
 
-        $section = $this->sectionFactory->create([
+        $section = $this->sectionFactory->create(
+            [
             'name' => $request->getParam('section'),
             'key' => $key
-        ]);
-
-        if (!$section->getModule()) {
-            return;
-        }
+            ]
+        );
 
         $data = $this->info->load([$section]);
 

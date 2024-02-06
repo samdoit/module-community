@@ -54,11 +54,11 @@ class BuilderPlugin
     /**
      * BuilderPlugin constructor.
      *
-     * @param ItemFactory $menuItemFactory
-     * @param Config $config
-     * @param Structure $structure
+     * @param ItemFactory         $menuItemFactory
+     * @param Config              $config
+     * @param Structure           $structure
      * @param ModuleListInterface $moduleList
-     * @param Manager $moduleManager
+     * @param Manager             $moduleManager
      */
     public function __construct(
         ItemFactory $menuItemFactory,
@@ -76,38 +76,43 @@ class BuilderPlugin
     }
 
     /**
-     * @param Builder $subject
-     * @param Menu $menu
-     * @param $result
+     * @param  Builder $subject
+     * @param  Menu    $menu
+     * @param  $result
      * @return mixed $result
      */
     public function afterGetResult(Builder $subject, Menu $menu, $result)
     {
         $menuEnabled = $this->config->menuEnabled();
         if ($menuEnabled) {
-            $item = $this->menuItemFactory->create([
+            $item = $this->menuItemFactory->create(
+                [
                 'data' => [
                     'id' => 'Samdoit_Community::elements',
                     'title' => 'Samdoit',
                     'module' => 'Samdoit_Community',
                     'resource' => 'Samdoit_Community::elements'
                 ]
-            ]);
+                ]
+            );
             $menu->add($item, null, 61);
             $subItems = $this->getSubItem($menu->toArray());
             $this->createMenuItem($menu, $subItems, 'Samdoit_Community::elements');
 
-            $item = $this->menuItemFactory->create([
+            $item = $this->menuItemFactory->create(
+                [
                 'data' => [
                     'id' => 'Samdoit_Community::extension_and_notification',
                     'title' => 'Extensions &amp; Notifications',
                     'module' => 'Samdoit_Community',
                     'resource' => 'Samdoit_Community::elements'
                 ]
-            ]);
+                ]
+            );
             $menu->add($item, 'Samdoit_Community::elements', 1000);
 
-            $item = $this->menuItemFactory->create([
+            $item = $this->menuItemFactory->create(
+                [
                 'data' => [
                     'id' => 'Samdoit_Community::extension_and_notification_view',
                     'title' => 'Manage',
@@ -115,7 +120,8 @@ class BuilderPlugin
                     'resource' => 'Samdoit_Community::elements',
                     'action' => 'adminhtml/system_config/edit/section/samdoit_extension',
                 ]
-            ]);
+                ]
+            );
             $menu->add($item, 'Samdoit_Community::extension_and_notification', 1000);
 
             unset($this->configSections['Samdoit_Community']);
@@ -124,17 +130,20 @@ class BuilderPlugin
                 $section = $this->getConfigSections($moduleName);
 
                 if (isset($section['id']) && 'samdoit_extension' != $section['id']) {
-                    $item = $this->menuItemFactory->create([
+                    $item = $this->menuItemFactory->create(
+                        [
                         'data' => [
                             'id' => $section['resource'] . '_custom',
                             'title' => $section['label'],
                             'module' => $moduleName,
                             'resource' => $section['resource']
                         ]
-                    ]);
+                        ]
+                    );
                     $menu->add($item, 'Samdoit_Community::elements');
 
-                    $item = $this->menuItemFactory->create([
+                    $item = $this->menuItemFactory->create(
+                        [
                         'data' => [
                             'id' => $section['resource'] . '_menu',
                             'title' => 'Configuration',
@@ -142,7 +151,8 @@ class BuilderPlugin
                             'action' => 'adminhtml/system_config/edit/section/' . $section['key'],
                             'module' => $moduleName
                         ]
-                    ]);
+                        ]
+                    );
                     $menu->add($item, $section['resource'] . '_custom', 1000);
                 }
             }
@@ -152,7 +162,7 @@ class BuilderPlugin
     }
 
     /**
-     * @param $moduleName
+     * @param  $moduleName
      * @return mixed|null
      */
     private function getConfigSections($moduleName)
@@ -183,7 +193,7 @@ class BuilderPlugin
     }
 
     /**
-     * @param $resource
+     * @param  $resource
      * @return string
      */
     private function getModuleNameByResource($resource)
@@ -207,18 +217,21 @@ class BuilderPlugin
             $title = trim(str_replace('Samdoit_', '', $title));
             $needCreateMenuItem = ('Samdoit_Community::elements' == $parentId && !empty($item['action']));
             if ($needCreateMenuItem) {
-                $subItem = $this->menuItemFactory->create([
+                $subItem = $this->menuItemFactory->create(
+                    [
                     'data' => [
                         'id' => $item['id'] . '3',
                         'title' => $title,
                         'resource' => $item['resource'],
                         'module' => isset($item['module']) ? $item['module'] : null,
                     ]
-                ]);
+                    ]
+                );
                 $menu->add($subItem, $parentId);
             }
 
-            $subItem = $this->menuItemFactory->create([
+            $subItem = $this->menuItemFactory->create(
+                [
                 'data' => [
                     'id' => $item['id'] . '2',
                     'title' => $item['title'],
@@ -226,7 +239,8 @@ class BuilderPlugin
                     'action' => $item['action'],
                     'module' => isset($item['module']) ? $item['module'] : null,
                 ]
-            ]);
+                ]
+            );
             if ($needCreateMenuItem) {
                 $menu->add($subItem, $item['id'] . '3');
             } else {
@@ -251,7 +265,8 @@ class BuilderPlugin
                 if ($addConfig) {
                     $section = $this->getConfigSections($moduleName);
                     if ($section) {
-                        $subItem = $this->menuItemFactory->create([
+                        $subItem = $this->menuItemFactory->create(
+                            [
                             'data' => [
                                 'id' => $section['resource'] . '_menu',
                                 'title' => 'Configuration',
@@ -259,7 +274,8 @@ class BuilderPlugin
                                 'action' => 'adminhtml/system_config/edit/section/' . $section['key'],
                                 'module' => $moduleName
                             ]
-                        ]);
+                            ]
+                        );
                         if ($needCreateMenuItem) {
                             $menu->add($subItem, $item['id'] . '3');
                         } else {
@@ -277,7 +293,7 @@ class BuilderPlugin
     }
 
     /**
-     * @param $items
+     * @param  $items
      * @return array
      */
     private function getSubItem($items)

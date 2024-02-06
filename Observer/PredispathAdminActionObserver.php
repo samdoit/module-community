@@ -25,7 +25,7 @@ class PredispathAdminActionObserver implements ObserverInterface
 
     /**
      * @param \Samdoit\Community\Model\AdminNotificationFeedFactory $feedFactory
-     * @param \Magento\Backend\Model\Auth\Session $backendAuthSession
+     * @param \Magento\Backend\Model\Auth\Session                   $backendAuthSession
      */
     public function __construct(
         \Samdoit\Community\Model\AdminNotificationFeedFactory $feedFactory,
@@ -38,8 +38,8 @@ class PredispathAdminActionObserver implements ObserverInterface
     /**
      * Predispath admin action controller
      *
-     * @param \Magento\Framework\Event\Observer $observer
-     * @return void
+     * @param                                         \Magento\Framework\Event\Observer $observer
+     * @return                                        void
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function execute(\Magento\Framework\Event\Observer $observer)

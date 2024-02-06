@@ -10,6 +10,7 @@ use Samdoit\Community\Api\ModuleVersionInterface;
 
 /**
  * Class AdminNotificationFeed
+ *
  * @package Samdoit\Community\Model
  */
 class AdminNotificationFeed extends \Magento\AdminNotification\Model\Feed
@@ -46,22 +47,23 @@ class AdminNotificationFeed extends \Magento\AdminNotification\Model\Feed
 
     /**
      * AdminNotificationFeed constructor.
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Backend\App\ConfigInterface $backendConfig
-     * @param \Magento\AdminNotification\Model\InboxFactory $inboxFactory
-     * @param \Magento\Backend\Model\Auth\Session $backendAuthSession
-     * @param \Magento\Framework\Module\ModuleListInterface $moduleList
-     * @param \Magento\Framework\Module\Manager $moduleManager
-     * @param \Magento\Framework\HTTP\Adapter\CurlFactory $curlFactory
-     * @param \Magento\Framework\App\DeploymentConfig $deploymentConfig
-     * @param \Magento\Framework\App\ProductMetadataInterface $productMetadata
-     * @param \Magento\Framework\UrlInterface $urlBuilder
+     *
+     * @param \Magento\Framework\Model\Context                             $context
+     * @param \Magento\Framework\Registry                                  $registry
+     * @param \Magento\Backend\App\ConfigInterface                         $backendConfig
+     * @param \Magento\AdminNotification\Model\InboxFactory                $inboxFactory
+     * @param \Magento\Backend\Model\Auth\Session                          $backendAuthSession
+     * @param \Magento\Framework\Module\ModuleListInterface                $moduleList
+     * @param \Magento\Framework\Module\Manager                            $moduleManager
+     * @param \Magento\Framework\HTTP\Adapter\CurlFactory                  $curlFactory
+     * @param \Magento\Framework\App\DeploymentConfig                      $deploymentConfig
+     * @param \Magento\Framework\App\ProductMetadataInterface              $productMetadata
+     * @param \Magento\Framework\UrlInterface                              $urlBuilder
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
-     * @param Config $config
-     * @param ModuleVersionInterface $moduleVersion
-     * @param array $data
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null           $resourceCollection
+     * @param Config                                                       $config
+     * @param ModuleVersionInterface                                       $moduleVersion
+     * @param array                                                        $data
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -79,7 +81,7 @@ class AdminNotificationFeed extends \Magento\AdminNotification\Model\Feed
         ModuleVersionInterface $moduleVersion,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = []
+        array $data = [],
     ) {
         parent::__construct($context, $registry, $backendConfig, $inboxFactory, $curlFactory, $deploymentConfig, $productMetadata, $urlBuilder, $resource, $resourceCollection, $data);
         $this->_backendAuthSession  = $backendAuthSession;
@@ -96,6 +98,7 @@ class AdminNotificationFeed extends \Magento\AdminNotification\Model\Feed
      */
     public function getFeedUrl()
     {
+        $this->_logger->debug('debug1234 AdminNotificationFeed');
         if (is_null($this->_feedUrl)) {
             $this->_feedUrl = 'http://lic'.'ence.'.'sam'.'do'.'it.c'
             .'om/community/notifications'.'/'.'feed/';
@@ -213,10 +216,12 @@ class AdminNotificationFeed extends \Magento\AdminNotification\Model\Feed
         }
 
         if (!$getNotification) {
-            return new \SimpleXMLElement('<?xml version="1.0" encoding="utf-8" ?>
+            return new \SimpleXMLElement(
+                '<?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel></channel>
-</rss>');
+</rss>'
+            );
         }
 
         return parent::getFeedData();

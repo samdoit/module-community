@@ -26,10 +26,11 @@ class ExtensionsInfo extends Field
 
     /**
      * ExtensionsInfo constructor.
-     * @param Context $context
-     * @param ModuleListInterface $moduleList
+     *
+     * @param Context                $context
+     * @param ModuleListInterface    $moduleList
      * @param ModuleVersionInterface $moduleVersion
-     * @param array $data
+     * @param array                  $data
      */
     public function __construct(
         Context $context,
@@ -43,7 +44,7 @@ class ExtensionsInfo extends Field
     }
 
     /**
-     * @param AbstractElement $element
+     * @param  AbstractElement $element
      * @return string
      */
     public function render(AbstractElement $element)

@@ -25,10 +25,11 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
 
     /**
      * Info constructor.
+     *
      * @param \Magento\Framework\Module\ModuleListInterface $moduleList
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param array $data
-     * @param ModuleVersionInterface|null $moduleVersion
+     * @param \Magento\Backend\Block\Template\Context       $context
+     * @param array                                         $data
+     * @param ModuleVersionInterface|null                   $moduleVersion
      */
     public function __construct(
         \Magento\Framework\Module\ModuleListInterface $moduleList,
@@ -45,6 +46,7 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
 
     /**
      * Return info block html
+     *
      * @param  \Magento\Framework\Data\Form\Element\AbstractElement $element
      * @return string
      */
@@ -66,6 +68,7 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
 
     /**
      * Return extension url
+     *
      * @return string
      */
     protected function getModuleUrl()
@@ -75,6 +78,7 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
 
     /**
      * Return extension title
+     *
      * @return string
      */
     protected function getModuleTitle()

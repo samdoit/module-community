@@ -12,6 +12,7 @@ use Magento\Framework\App\ResourceConnection;
 
 /**
  * Class Sections
+ *
  * @package Samdoit\Community
  */
 class Sections
@@ -33,9 +34,10 @@ class Sections
 
     /**
      * Sections constructor.
+     *
      * @param ResourceConnection $resource
-     * @param SectionFactory $sectionFactory
-     * @param Info $info
+     * @param SectionFactory     $sectionFactory
+     * @param Info               $info
      */
     public function __construct(
         ResourceConnection $resource,
@@ -70,9 +72,11 @@ class Sections
             if (empty($matches[1])) {
                 continue;
             }
-            $section = $this->sectionFactory->create([
+            $section = $this->sectionFactory->create(
+                [
                 'name' => $matches[1]
-            ]);
+                ]
+            );
 
             if ($section->getModule()) {
                 $sections[$section->getModule()] = $section;

@@ -43,9 +43,10 @@ class ModuleVersion implements ModuleVersionInterface
 
     /**
      * ModuleVersion constructor.
+     *
      * @param SerializerInterface $serializer
-     * @param File $file
-     * @param Reader $moduleReader
+     * @param File                $file
+     * @param Reader              $moduleReader
      * @param ModuleListInterface $moduleList
      */
     public function __construct(
@@ -61,7 +62,7 @@ class ModuleVersion implements ModuleVersionInterface
     }
 
     /**
-     * @param string $moduleName
+     * @param  string $moduleName
      * @return string
      */
     public function execute(string $moduleName): string

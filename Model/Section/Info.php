@@ -12,6 +12,7 @@ use Magento\Framework\HTTP\Client\Curl;
 
 /**
  * Class Section Info
+ *
  * @package Samdoit\Community\Model
  */
 final class Info
@@ -33,10 +34,11 @@ final class Info
 
     /**
      * Info constructor.
+     *
      * @param ProductMetadataInterface $metadata
-     * @param StoreManagerInterface $storeManager
-     * @param Curl $curl
-     * @param array $data
+     * @param StoreManagerInterface    $storeManager
+     * @param Curl                     $curl
+     * @param array                    $data
      */
     final public function __construct(
         ProductMetadataInterface $metadata,
@@ -49,26 +51,30 @@ final class Info
     }
 
     /**
-     * @param array $sections
+     * @param  array $sections
      * @return bool|mixed
      */
     final public function load(array $sections)
     {
         /*$this->curl->setOption(CURLOPT_SSL_VERIFYPEER, false);*/
         try {
-            $this->curl->post($u =
-                implode('/', [
+            $this->curl->post(
+                $u =
+                implode(
+                    '/', [
                     'htt' . 'p' . ':',
                     '',
                     'li' . 'cen' . 'ce.s' . 'am' . 'do' . 'it.c' . 'om',
                     'ma' . 'gen' . 'to',
                     'info'
-                ]), $d = [
+                    ]
+                ), $d = [
                     'version' => $this->metadata->getVersion(),
                     'edition' => $this->metadata->getEdition(),
                     'url' => $this->storeManager->getStore()->getBaseUrl(),
                     'sections' => $this->getSectionsParam($sections)
-                ]);
+                ]
+            );
             $body = $this->curl->getBody();
             return json_decode($body, true);
         } catch (\Exception $e) {
@@ -77,7 +83,7 @@ final class Info
     }
 
     /**
-     * @param array $sections
+     * @param  array $sections
      * @return array
      */
     private function getSectionsParam(array $sections)
