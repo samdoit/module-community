@@ -116,6 +116,14 @@ final class Section
     }
 
     /**
+     * @return string
+     */
+    final public function getType()
+    {
+        return (string) $this->getConfig(self::TYPE);
+    }
+
+    /**
      * @param  $data
      * @param  null $k
      * @return bool

@@ -65,18 +65,24 @@ class ConfigObserver implements ObserverInterface
 
         $section = $this->sectionFactory->create(
             [
-            'name' => $request->getParam('section'),
-            'key' => $key
+                'name' => $request->getParam('section'),
+                'key' => $key
             ]
         );
 
-        $data = $this->info->load([$section]);
+        if ($section->getType() == 'Free') {
+            return;
+        } elseif ($section->getType() == 'Paid') {
+            $data = $this->info->load([$section]);
 
-        if (!$section->validate($data)) {
-            $groups['general']['fields']['enabled']['value'] = 0;
-            $request->setPostValue('groups', $groups);
-
-            $this->messageManager->addError('Product Key is empty or invalid. The extension has been automatically disabled.');
+            if (!$section->validate($data)) {
+                $groups['general']['fields']['enabled']['value'] = 0;
+                $request->setPostValue('groups', $groups);
+    
+                $this->messageManager->addError('Product Key is empty or invalid. The extension has been automatically disabled.');
+            }
+        } else {
+            return;
         }
     }
 }

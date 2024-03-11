@@ -17,7 +17,7 @@ interface ModuleVersionInterface
      * Get module version
      *
      * @api
-     * @param string $moduleName
+     * @param  string $moduleName
      * @return string
      */
     public function execute(string $moduleName) : string;

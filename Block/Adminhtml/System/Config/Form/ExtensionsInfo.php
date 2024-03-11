@@ -50,7 +50,7 @@ class ExtensionsInfo extends Field
     public function render(AbstractElement $element)
     {
         $products = $this->getJsonObject();
-        //echo "<pre>";print_r($products);die;
+
         if (!$products) {
             return '';
         }

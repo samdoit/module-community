@@ -73,7 +73,7 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
      */
     protected function getModuleUrl()
     {
-        return 'https://sam' . 'do' .'it.com?utm_source=m2_admin_config&utm_medium=link&utm_campaign=regular';
+        return 'https://sam' . 'do' .'it.com?utm_source=Mage' .'nto' .'2' .'Config&utm_medium=link&utm_campaign=regular';
     }
 
     /**
