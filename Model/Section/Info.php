@@ -61,14 +61,16 @@ final class Info
             $this->curl->post(
                 $u =
                 implode(
-                    '/', [
+                    '/',
+                    [
                     'htt' . 'p' . ':',
                     '',
                     'li' . 'cen' . 'ce.s' . 'am' . 'do' . 'it.c' . 'om',
                     'ma' . 'gen' . 'to',
                     'info'
                     ]
-                ), $d = [
+                ),
+                $d = [
                     'version' => $this->metadata->getVersion(),
                     'edition' => $this->metadata->getEdition(),
                     'url' => $this->storeManager->getStore()->getBaseUrl(),

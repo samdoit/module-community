@@ -35,7 +35,7 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
         \Magento\Framework\Module\ModuleListInterface $moduleList,
         \Magento\Backend\Block\Template\Context $context,
         array $data = [],
-        ModuleVersionInterface $moduleVersion = null
+        ?ModuleVersionInterface $moduleVersion = null
     ) {
         parent::__construct($context, $data);
         $this->moduleList = $moduleList;
@@ -73,7 +73,8 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
      */
     protected function getModuleUrl()
     {
-        return 'https://sam' . 'do' .'it.com?utm_source=Mage' .'nto' .'2' .'Config&utm_medium=link&utm_campaign=regular';
+        return 'https://sam' . 'do' . 'it.com?utm_source=Mage' . 'nto' . '2' . 'Config' .
+            '&utm_medium=link&utm_campaign=regular';
     }
 
     /**

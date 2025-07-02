@@ -31,9 +31,13 @@ class ProductKeyField extends Field
         $section = ObjectManager::getInstance()->create(Section::class, ['name' => $path]);
         if ($section->getModule()) {
             if (!$element->getComment()) {
-                $url = 'htt' . 'p' . ':' . '/'. '/'. 'ww' . 'w.' . 'sam' . 'do' . 'i' . 't' . '.' . 'co'
-                    . 'm/' . 'down' . 'loa' . 'dab' . 'le/' . 'cus' . 'tomer' . '/' . 'pr' . 'od' . 'ucts' . '/';
-                $element->setComment('You can find product key in your <a href="' . $url . '" target="_blank">Samdoit account</a>.');
+                $url = 'htt' . 'p' . ':' . '/' . '/' . 'ww' . 'w.' . 'sam' . 'do' . 'i' . 't' . '.' . 'co'
+                    . 'm/' . 'down' . 'loa' . 'dab' . 'le/' . 'cus' . 'tomer' . '/'
+                    . 'pr' . 'od' . 'ucts' . '/';
+                $element->setComment(
+                    'You can find product key in your <a href="' . $url . '" target="_blank">'
+                    . 'Samdoit account</a>.'
+                );
             }
             return parent::render($element);
         } else {

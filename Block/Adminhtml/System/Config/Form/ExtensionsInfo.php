@@ -44,8 +44,10 @@ class ExtensionsInfo extends Field
     }
 
     /**
-     * @param  AbstractElement $element
-     * @return string
+     * Renders the HTML output for the given system configuration form element.
+     *
+     * @param  AbstractElement $element The form element to render.
+     * @return string The rendered HTML output.
      */
     public function render(AbstractElement $element)
     {
@@ -76,17 +78,20 @@ class ExtensionsInfo extends Field
             $html .= '<tbody class="samdoit-section">';
 
             foreach ($products as $productKey => $product) {
-
                 $moduleName = 'Samdoit_' . $productKey;
                 $module = $this->moduleList->getOne($moduleName);
 
                 if ((!$module && $listKey != 'new_extensions') || ($module && $listKey == 'new_extensions')) {
                     continue;
                 }
-                if ($listKey == 'up_to_date' && version_compare($this->moduleVersion->execute($moduleName), $product->version) < 0) {
+                if ($listKey == 'up_to_date' &&
+                    version_compare($this->moduleVersion->execute($moduleName), $product->version) < 0
+                ) {
                     continue;
                 }
-                if ($listKey == 'need_update' && version_compare($this->moduleVersion->execute($moduleName), $product->version) >= 0) {
+                if ($listKey == 'need_update' &&
+                    version_compare($this->moduleVersion->execute($moduleName), $product->version) >= 0
+                ) {
                     continue;
                 }
 
@@ -98,12 +103,14 @@ class ExtensionsInfo extends Field
                     $version = $this->moduleVersion->execute($moduleName);
                 }
 
-
                 $html .= '<tr>';
-                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->product_url) . '">' . $this->escapeHtml($product->product_name) . '</a></td>';
+                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->product_url) . '">'
+                    . $this->escapeHtml($product->product_name) . '</a></td>';
                 $html .= '<td>' . $this->escapeHtml($version) . '</td>';
-                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->change_log_url) . '">' . $this->escapeHtml(__('Change Log')) . '</a></td>';
-                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->documentation_url) . '">'. $this->escapeHtml(__('User Guide')). '</a></td>';
+                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->change_log_url) . '">'
+                    . $this->escapeHtml(__('Change Log')) . '</a></td>';
+                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->documentation_url) . '">'
+                    . $this->escapeHtml(__('User Guide')) . '</a></td>';
                 $html .= '</tr>';
             }
 
@@ -114,15 +121,28 @@ class ExtensionsInfo extends Field
     }
 
     /**
-     * @return mixed
+     * Retrieves and decodes a JSON object containing product version information from a remote server.
+     *
+     * @return mixed The decoded JSON object on success, or null on failure.
      */
     public function getJsonObject()
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, 'http://li'.'cen'.'ce.s'.'am'.'do'.'it.c'.'om'.'/media/magento/product-versions.json');
-        $result = curl_exec($ch);
-        curl_close($ch);
+        $url = 'http://li'.'cen'.'ce.s'.'am'.'do'.'it.c'.'om'.'/media/magento/product-versions.json';
+
+        /** @var \Magento\Framework\HTTP\Client\Curl $curl */
+        $curl = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\HTTP\Client\Curl::class);
+
+        try {
+            $curl->get($url);
+            $result = $curl->getBody();
+        } catch (\Exception $e) {
+            // Optionally log the error here using Magento's logger
+            return null;
+        }
+
+        if (!$result) {
+            return null;
+        }
 
         $obj = json_decode($result);
         return $obj;

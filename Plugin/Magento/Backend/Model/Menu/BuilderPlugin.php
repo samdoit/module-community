@@ -301,7 +301,7 @@ class BuilderPlugin
         $subItems = [];
         if (!empty($items)) {
             foreach ($items as $item) {
-                if (isset($item['module']) &&  0 === strpos($item['module'], 'Samdoit_')
+                if (isset($item['module']) && 0 === strpos($item['module'], 'Samdoit_')
                     || !isset($item['module']) && isset($item['id']) && 0 === strpos($item['id'], 'Samdoit_')
                 ) {
                     if ('Samdoit_Community::elements' != $item['id']) {
