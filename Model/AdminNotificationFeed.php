@@ -79,11 +79,23 @@ class AdminNotificationFeed extends \Magento\AdminNotification\Model\Feed
         \Magento\Framework\UrlInterface $urlBuilder,
         Config $config,
         ModuleVersionInterface $moduleVersion,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = [],
     ) {
-        parent::__construct($context, $registry, $backendConfig, $inboxFactory, $curlFactory, $deploymentConfig, $productMetadata, $urlBuilder, $resource, $resourceCollection, $data);
+        parent::__construct(
+            $context,
+            $registry,
+            $backendConfig,
+            $inboxFactory,
+            $curlFactory,
+            $deploymentConfig,
+            $productMetadata,
+            $urlBuilder,
+            $resource,
+            $resourceCollection,
+            $data
+        );
         $this->_backendAuthSession  = $backendAuthSession;
         $this->_moduleList = $moduleList;
         $this->_moduleManager = $moduleManager;
