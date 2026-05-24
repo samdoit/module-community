@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Observer;
 
 use Magento\Framework\Event\ObserverInterface;

@@ -4,12 +4,15 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Block\Adminhtml\System\Config\Form;
 
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\Module\ModuleListInterface;
 use Magento\Backend\Block\Template\Context;
+use Magento\Framework\HTTP\Client\Curl;
 use Samdoit\Community\Api\ModuleVersionInterface;
 
 class ExtensionsInfo extends Field
@@ -25,31 +28,24 @@ class ExtensionsInfo extends Field
     private $moduleVersion;
 
     /**
-     * ExtensionsInfo constructor.
-     *
-     * @param Context                $context
-     * @param ModuleListInterface    $moduleList
-     * @param ModuleVersionInterface $moduleVersion
-     * @param array                  $data
+     * @var Curl
      */
+    private $curl;
+
     public function __construct(
         Context $context,
         ModuleListInterface $moduleList,
         ModuleVersionInterface $moduleVersion,
+        Curl $curl,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->moduleList = $moduleList;
         $this->moduleVersion = $moduleVersion;
+        $this->curl = $curl;
     }
 
-    /**
-     * Renders the HTML output for the given system configuration form element.
-     *
-     * @param  AbstractElement $element The form element to render.
-     * @return string The rendered HTML output.
-     */
-    public function render(AbstractElement $element)
+    public function render(AbstractElement $element): string
     {
         $products = $this->getJsonObject();
 
@@ -104,12 +100,12 @@ class ExtensionsInfo extends Field
                 }
 
                 $html .= '<tr>';
-                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->product_url) . '">'
+                $html .= '<td><a target="_blank" href="' . $this->escapeUrl($product->product_url) . '">'
                     . $this->escapeHtml($product->product_name) . '</a></td>';
                 $html .= '<td>' . $this->escapeHtml($version) . '</td>';
-                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->change_log_url) . '">'
+                $html .= '<td><a target="_blank" href="' . $this->escapeUrl($product->change_log_url) . '">'
                     . $this->escapeHtml(__('Change Log')) . '</a></td>';
-                $html .= '<td><a target="_blank" href="' . $this->escapeHtml($product->documentation_url) . '">'
+                $html .= '<td><a target="_blank" href="' . $this->escapeUrl($product->documentation_url) . '">'
                     . $this->escapeHtml(__('User Guide')) . '</a></td>';
                 $html .= '</tr>';
             }
@@ -120,23 +116,12 @@ class ExtensionsInfo extends Field
         return $html;
     }
 
-    /**
-     * Retrieves and decodes a JSON object containing product version information from a remote server.
-     *
-     * @return mixed The decoded JSON object on success, or null on failure.
-     */
-    public function getJsonObject()
+    private function getJsonObject(): mixed
     {
-        $url = 'http://li'.'cen'.'ce.s'.'am'.'do'.'it.c'.'om'.'/media/magento/product-versions.json';
-
-        /** @var \Magento\Framework\HTTP\Client\Curl $curl */
-        $curl = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\HTTP\Client\Curl::class);
-
         try {
-            $curl->get($url);
-            $result = $curl->getBody();
-        } catch (\Exception $e) {
-            // Optionally log the error here using Magento's logger
+            $this->curl->get('https://licence.samdoit.com/media/magento/product-versions.json');
+            $result = $this->curl->getBody();
+        } catch (\Exception) {
             return null;
         }
 
@@ -144,7 +129,6 @@ class ExtensionsInfo extends Field
             return null;
         }
 
-        $obj = json_decode($result);
-        return $obj;
+        return json_decode($result);
     }
 }

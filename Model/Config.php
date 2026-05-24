@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -47,109 +49,48 @@ class Config
      * @param  null $storeId
      * @return string
      */
-    public function receiveProductUpdates($storeId = null)
+    public function receiveProductUpdates(int|string|null $storeId = null): mixed
     {
-        return $this->getConfig(
-            self::XML_PATH_RECEIVE_PRODUCT_UPDATES,
-            $storeId
-        );
+        return $this->getConfig(self::XML_PATH_RECEIVE_PRODUCT_UPDATES, $storeId);
     }
 
-    /**
-     * Receive Special Offers
-     *
-     * @param  null $storeId
-     * @return string
-     */
-    public function receiveSpecialOffers($storeId = null)
+    public function receiveSpecialOffers(int|string|null $storeId = null): mixed
     {
-        return $this->getConfig(
-            self::XML_PATH_RECEIVE_SPECIAL_OFFERS,
-            $storeId
-        );
+        return $this->getConfig(self::XML_PATH_RECEIVE_SPECIAL_OFFERS, $storeId);
     }
 
-    /**
-     * Receive News
-     *
-     * @param  null $storeId
-     * @return string
-     */
-    public function receiveNews($storeId = null)
+    public function receiveNews(int|string|null $storeId = null): mixed
     {
-        return $this->getConfig(
-            self::XML_PATH_RECEIVE_NEWS,
-            $storeId
-        );
+        return $this->getConfig(self::XML_PATH_RECEIVE_NEWS, $storeId);
     }
 
-    /**
-     * Receive Tips & Tricks
-     *
-     * @param  null $storeId
-     * @return string
-     */
-    public function receiveTipsAndTricks($storeId = null)
+    public function receiveTipsAndTricks(int|string|null $storeId = null): mixed
     {
-        return $this->getConfig(
-            self::XML_PATH_RECEIVE_TIPS_AND_TRICKS,
-            $storeId
-        );
+        return $this->getConfig(self::XML_PATH_RECEIVE_TIPS_AND_TRICKS, $storeId);
     }
 
-    /**
-     * Receive General Information
-     *
-     * @param  null $storeId
-     * @return string
-     */
-    public function receiveGeneralInformation($storeId = null)
+    public function receiveGeneralInformation(int|string|null $storeId = null): mixed
     {
-        return $this->getConfig(
-            self::XML_PATH_RECEIVE_GENERAL_INFORMATION,
-            $storeId
-        );
+        return $this->getConfig(self::XML_PATH_RECEIVE_GENERAL_INFORMATION, $storeId);
     }
 
-    /**
-     * Receive Notifications
-     *
-     * @param  null $storeId
-     * @return array
-     */
-    public function receiveNotifications($storeId = null)
+    public function receiveNotifications(int|string|null $storeId = null): array
     {
         return [
-            'update' => $this->receiveProductUpdates(),
-            'offer' => $this->receiveSpecialOffers(),
-            'news' => $this->receiveNews(),
-            'tip_trick' => $this->receiveTipsAndTricks(),
-            'general' => $this->receiveGeneralInformation()
+            'update' => $this->receiveProductUpdates($storeId),
+            'offer' => $this->receiveSpecialOffers($storeId),
+            'news' => $this->receiveNews($storeId),
+            'tip_trick' => $this->receiveTipsAndTricks($storeId),
+            'general' => $this->receiveGeneralInformation($storeId)
         ];
     }
 
-    /**
-     * Display Menu
-     *
-     * @param  null $storeId
-     * @return string
-     */
-    public function menuEnabled($storeId = null)
+    public function menuEnabled(int|string|null $storeId = null): mixed
     {
-        return $this->getConfig(
-            self::XML_PATH_MENU_ENABLED,
-            $storeId
-        );
+        return $this->getConfig(self::XML_PATH_MENU_ENABLED, $storeId);
     }
 
-    /**
-     * Retrieve store config value
-     *
-     * @param  string $path
-     * @param  null   $storeId
-     * @return mixed
-     */
-    public function getConfig($path, $storeId = null)
+    public function getConfig(string $path, int|string|null $storeId = null): mixed
     {
         return $this->scopeConfig->getValue(
             $path,

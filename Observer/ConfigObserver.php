@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
@@ -70,19 +72,18 @@ class ConfigObserver implements ObserverInterface
             ]
         );
 
-        if ($section->getType() == 'Free') {
+        if ($section->getType() !== 'Paid') {
             return;
-        } elseif ($section->getType() == 'Paid') {
-            $data = $this->info->load([$section]);
+        }
 
-            if (!$section->validate($data)) {
-                $groups['general']['fields']['enabled']['value'] = 0;
-                $request->setPostValue('groups', $groups);
-    
-                $this->messageManager->addError('Product Key is empty or invalid. The extension has been automatically disabled.');
-            }
-        } else {
-            return;
+        $data = $this->info->load([$section]);
+
+        if (!$section->validate($data)) {
+            $groups['general']['fields']['enabled']['value'] = 0;
+            $request->setPostValue('groups', $groups);
+            $this->messageManager->addErrorMessage(
+                __('Product Key is empty or invalid. The extension has been automatically disabled.')
+            );
         }
     }
 }

@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Model\Section;
 
 use Magento\Framework\App\ProductMetadataInterface;
@@ -56,21 +58,10 @@ final class Info
      */
     final public function load(array $sections)
     {
-        /*$this->curl->setOption(CURLOPT_SSL_VERIFYPEER, false);*/
         try {
             $this->curl->post(
-                $u =
-                implode(
-                    '/',
-                    [
-                    'htt' . 'p' . ':',
-                    '',
-                    'li' . 'cen' . 'ce.s' . 'am' . 'do' . 'it.c' . 'om',
-                    'ma' . 'gen' . 'to',
-                    'info'
-                    ]
-                ),
-                $d = [
+                'https://licence.samdoit.com/magento/info',
+                [
                     'version' => $this->metadata->getVersion(),
                     'edition' => $this->metadata->getEdition(),
                     'url' => $this->storeManager->getStore()->getBaseUrl(),
@@ -79,7 +70,7 @@ final class Info
             );
             $body = $this->curl->getBody();
             return json_decode($body, true);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
     }

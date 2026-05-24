@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Plugin\Magento\Backend\Model\Menu;
 
 use Magento\Backend\Model\Menu\Builder;
@@ -77,11 +79,12 @@ class BuilderPlugin
 
     /**
      * @param  Builder $subject
+     * @param  Menu    $result
      * @param  Menu    $menu
-     * @param  $result
-     * @return mixed $result
+     * @return Menu
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterGetResult(Builder $subject, Menu $menu, $result)
+    public function afterGetResult(Builder $subject, Menu $result, Menu $menu): Menu
     {
         $menuEnabled = $this->config->menuEnabled();
         if ($menuEnabled) {
@@ -95,21 +98,21 @@ class BuilderPlugin
                 ]
                 ]
             );
-            $menu->add($item, null, 61);
-            $subItems = $this->getSubItem($menu->toArray());
-            $this->createMenuItem($menu, $subItems, 'Samdoit_Community::elements');
+            $result->add($item, null, 61);
+            $subItems = $this->getSubItem($result->toArray());
+            $this->createMenuItem($result, $subItems, 'Samdoit_Community::elements');
 
             $item = $this->menuItemFactory->create(
                 [
                 'data' => [
                     'id' => 'Samdoit_Community::extension_and_notification',
-                    'title' => 'Extensions &amp; Notifications',
+                    'title' => 'Extensions & Notifications',
                     'module' => 'Samdoit_Community',
                     'resource' => 'Samdoit_Community::elements'
                 ]
                 ]
             );
-            $menu->add($item, 'Samdoit_Community::elements', 1000);
+            $result->add($item, 'Samdoit_Community::elements', 1000);
 
             $item = $this->menuItemFactory->create(
                 [
@@ -122,7 +125,7 @@ class BuilderPlugin
                 ]
                 ]
             );
-            $menu->add($item, 'Samdoit_Community::extension_and_notification', 1000);
+            $result->add($item, 'Samdoit_Community::extension_and_notification', 1000);
 
             unset($this->configSections['Samdoit_Community']);
 
@@ -140,7 +143,7 @@ class BuilderPlugin
                         ]
                         ]
                     );
-                    $menu->add($item, 'Samdoit_Community::elements');
+                    $result->add($item, 'Samdoit_Community::elements');
 
                     $item = $this->menuItemFactory->create(
                         [
@@ -153,7 +156,7 @@ class BuilderPlugin
                         ]
                         ]
                     );
-                    $menu->add($item, $section['resource'] . '_custom', 1000);
+                    $result->add($item, $section['resource'] . '_custom', 1000);
                 }
             }
         }
@@ -165,7 +168,7 @@ class BuilderPlugin
      * @param  $moduleName
      * @return mixed|null
      */
-    private function getConfigSections($moduleName)
+    private function getConfigSections(string $moduleName): ?array
     {
         if (null === $this->configSections) {
             $sections = [];
@@ -196,7 +199,7 @@ class BuilderPlugin
      * @param  $resource
      * @return string
      */
-    private function getModuleNameByResource($resource)
+    private function getModuleNameByResource(string $resource): string
     {
         $moduleName =  explode(':', $resource);
         $moduleName = $moduleName[0];
@@ -209,7 +212,7 @@ class BuilderPlugin
      * @param $items
      * @param $parentId
      */
-    private function createMenuItem($menu, $items, $parentId)
+    private function createMenuItem(Menu $menu, array $items, string $parentId): void
     {
         foreach ($items as $item) {
             $moduleName = isset($item['module']) ? $item['module'] : null;
@@ -296,7 +299,7 @@ class BuilderPlugin
      * @param  $items
      * @return array
      */
-    private function getSubItem($items)
+    private function getSubItem(array $items): array
     {
         $subItems = [];
         if (!empty($items)) {

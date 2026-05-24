@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Model;
 
 use Samdoit\Community\Api\ModuleVersionInterface;
@@ -110,10 +112,8 @@ class AdminNotificationFeed extends \Magento\AdminNotification\Model\Feed
      */
     public function getFeedUrl()
     {
-        $this->_logger->debug('debug1234 AdminNotificationFeed');
-        if (is_null($this->_feedUrl)) {
-            $this->_feedUrl = 'http://lic'.'ence.'.'sam'.'do'.'it.c'
-            .'om/community/notifications'.'/'.'feed/';
+        if ($this->_feedUrl === null) {
+            $this->_feedUrl = 'https://licence.samdoit.com/community/notifications/feed/';
         }
         $urlInfo = parse_url($this->urlBuilder->getBaseUrl());
         $domain = isset($urlInfo['host']) ? $urlInfo['host'] : '';

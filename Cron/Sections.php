@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Cron;
 
 use Samdoit\Community\Model\SectionFactory;
@@ -56,7 +58,7 @@ class Sections
     {
         $connection = $this->resource->getConnection();
         $table = $this->resource->getTableName('core_config_data');
-        $path = 'gen' . 'er' . 'al'. '/' . 'ena' . 'bled';
+        $path = 'general/enabled';
 
         $select = $connection->select()->from(
             [$table]
@@ -89,7 +91,7 @@ class Sections
             $data = $this->info->load($sections);
 
             if ($data && is_array($data)) {
-                foreach ($data as $module => $item) {
+                foreach (array_keys($data) as $module) {
                     $section = $sections[$module];
                     if (!$section->validate($data)) {
                         $connection->update(

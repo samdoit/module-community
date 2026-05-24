@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Block\Adminhtml\System\Config\Form;
 
 use Samdoit\Community\Api\ModuleVersionInterface;
@@ -28,20 +30,18 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
      *
      * @param \Magento\Framework\Module\ModuleListInterface $moduleList
      * @param \Magento\Backend\Block\Template\Context       $context
+     * @param ModuleVersionInterface                        $moduleVersion
      * @param array                                         $data
-     * @param ModuleVersionInterface|null                   $moduleVersion
      */
     public function __construct(
         \Magento\Framework\Module\ModuleListInterface $moduleList,
         \Magento\Backend\Block\Template\Context $context,
-        array $data = [],
-        ?ModuleVersionInterface $moduleVersion = null
+        ModuleVersionInterface $moduleVersion,
+        array $data = []
     ) {
         parent::__construct($context, $data);
         $this->moduleList = $moduleList;
-        $this->moduleVersion = $moduleVersion ?: \Magento\Framework\App\ObjectManager::getInstance()->get(
-            \Samdoit\Community\Api\ModuleVersionInterface::class
-        );
+        $this->moduleVersion = $moduleVersion;
     }
 
     /**
@@ -57,7 +57,7 @@ class Info extends \Magento\Config\Block\System\Config\Form\Field
         $html = '<div style="padding:10px;background-color:#f8f8f8;border:1px solid #ddd;margin-bottom:7px;">
             ' . $this->escapeHtml($this->getModuleTitle()) . ' v' . $this->escapeHtml($version) . ' was developed by ';
         if ($useUrl) {
-            $html .= '<a href="' . $this->escapeHtml($this->getModuleUrl()) . '" target="_blank">Samdoit</a>';
+            $html .= '<a href="' . $this->escapeUrl($this->getModuleUrl()) . '" target="_blank">Samdoit</a>';
         } else {
             $html .= '<strong>Samdoit</strong>';
         }

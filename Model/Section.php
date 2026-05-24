@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -82,7 +84,7 @@ final class Section
         $module = (string) $this->getConfig(self::MODULE);
 
         $url = $this->scopeConfig->getValue(
-            'web/unsecure/base' . '_' . 'url',
+            'web/unsecure/base_url',
             ScopeInterface::SCOPE_STORE,
             0
         );

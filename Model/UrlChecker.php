@@ -4,6 +4,8 @@
  * Please visit Samdoit.com for license details (http://www.samdoit.com/end-user-license-agreement).
  */
 
+declare(strict_types=1);
+
 namespace Samdoit\Community\Model;
 
 /*
@@ -14,7 +16,7 @@ class UrlChecker
     /**
      * @return bool
      */
-    final public static function showUrl($url)
+    final public static function showUrl(string $url): bool
     {
         $url = (string)$url;
         $info = parse_url($url);
